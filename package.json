@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "node server.js",
-    "vercel-build": "npm run prepare && next build"
+    "dev": "node server.js"
   },
   "author": "",
   "license": "ISC",
