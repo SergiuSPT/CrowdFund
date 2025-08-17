@@ -1,24 +1,46 @@
-import React, { useEffect} from "react";
-import factory from '../ethereum/factory.js';
-import CardGroups from '../Components/CardGroups.jsx';
-import ButtonWithIcon from '../Components/ButtonWithIcon.jsx';
-import Layout from '../Components/Layout.jsx';
-import { useState } from 'react';
-import { Link } from "../routes.js";
+import React from "react";
+import { Card, Button } from "semantic-ui-react";
+import { Link } from "../routes";
+import Layout from "../Components/Layout";
+import factory from "../ethereum/factory";
 
-export default function CampaignIndex({campaigns}) {
-    return (
-      <Layout>
-        <div>
-            <h3>Open Campaigns</h3>
-            <Link route="/campaigns/new">
-              <a><ButtonWithIcon text="Create Campaign" icon="circle add"/></a>
+export default function CampaignIndex({ campaigns }) {
+  const renderCampaigns = () => {
+    return campaigns.map((address) => {
+      return (
+        <Card
+          fluid
+          key={address}
+          header={
+            <div style={{ overflowWrap: "break-word" }}>
+              {address}
+            </div>
+          }
+          description={
+            <Link route={`/campaigns/${address}`}>
+              <a>View Campaign</a>
             </Link>
-            <CardGroups campaigns={campaigns} />
-        </div>
-      </Layout>
-  );
+          }
+        />
+      );
+    });
+  };
 
+  return (
+    <Layout>
+      <div style={{ marginBottom: "20px" }}>
+        <Link route="/campaigns/new">
+          <a>
+            <Button primary floated="right">
+              Create Campaign
+            </Button>
+          </a>
+        </Link>
+        <h3>Open Campaigns</h3>
+      </div>
+      <Card.Group>{renderCampaigns()}</Card.Group>
+    </Layout>
+  );
 }
 
 CampaignIndex.getInitialProps = async () => {
